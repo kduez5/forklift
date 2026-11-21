@@ -1,0 +1,23 @@
+# Python local environment and caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Manual station runtime and private machine configuration
+/manual_station/runtime/
+/manual_station/wiring.local.json
+/manual_station/config.local.json
+/manual_station/.env
+/manual_station/.env.*
+*.sqlite
+*.sqlite3
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite3-wal
+*.sqlite3-shm
+*.log
+
+# Local test/session artifacts are not source
+/outputs/
