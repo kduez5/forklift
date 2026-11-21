@@ -6,6 +6,17 @@
 
 프로젝트 루트에서 Python 3.11+와 NumPy가 필요합니다. 현재 검증 환경은 Python 3.11.2 / NumPy 2.3.1입니다.
 
+팀원은 개인 포크의 공유 브랜치를 내려받아 PC에서 실행할 수 있습니다. 원본 저장소에 병합되기 전에도 사용할 수 있으며 모터 제어 파일과 독립되어 있습니다.
+
+```powershell
+git clone --branch codex/autonomy-lab --single-branch https://github.com/leejunhee0813/forklift.git forklift-autonomy
+cd forklift-autonomy
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install numpy==2.3.1
+```
+
+이후 Windows에서는 아래 `python`을 `.venv\Scripts\python.exe`로 바꿉니다. Linux에서는 같은 가상환경을 만든 뒤 `.venv/bin/python`으로 설치·실행합니다. 추가 장치 패키지는 필요하지 않습니다.
+
 ```powershell
 python -m autonomy_lab --output outputs/my_rl_run --episodes 2500
 python -m autonomy_lab.server --run-dir outputs/my_rl_run --observations outputs/rl_resume_20261121 --port 8766

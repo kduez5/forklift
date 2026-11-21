@@ -11,7 +11,7 @@
 <section class="panel"><h2>학습 진행과 고정 평가</h2><canvas id="chart" width="640" height="180"></canvas><p class="muted">에피소드 보상 — 평가 중에는 정책을 갱신하지 않습니다.</p><div id="comparison"></div><pre id="metrics">평가 결과 대기</pre><p class="muted" id="traceNote">재생: 첫 성공 우선 선택. 전체 성능은 평가 표를 확인하세요.</p><h2>모의 초음파 · 관측 상태</h2><table><thead><tr><th>방향</th><th>거리</th><th>유효</th><th>age</th></tr></thead><tbody id="ranges"><tr><td colspan="4">모의 기록 대기</td></tr></tbody></table><p class="muted" id="vision">합성 카메라 관측: 대기</p></section></div>
 <div class="grid"><section class="panel"><h2>실제 카메라 · 1회 촬영</h2><p class="muted">IMX219 · 실시간 스트림이 아닌 정지 스냅샷</p><img id="camera" class="camera" src="/real-camera.jpg" alt="파이에서 촬영한 원본 카메라 스냅샷"><div class="row"><button id="rotate">표시만 180° 회전</button><span class="muted">원본·차체 좌표는 변경하지 않음</span></div><p class="muted" id="camtime">촬영 메타데이터 확인 중</p></section>
 <section class="panel"><h2>실제 라이다 · 독립 관측</h2><canvas id="realScan" width="640" height="300"></canvas><p id="lidarstatus" class="muted">스냅샷 미수신</p><p class="muted">센서 좌표의 반사점입니다. 차체 전방 보정과 실제 충돌 여유는 미확정입니다.</p><p class="amber">실제 초음파: 방향·전압 미확인. 모의 거리로 대체하지 않습니다.</p></section></div>
-<section class="panel" style="margin-top:16px"><h2>중단 지점과 남은 확인</h2><pre id="realstatus">확인 기록 대기</pre><p><a href="https://app.notion.com/p/41f1cdebb6a581dfb891d81c66aec43b" target="_blank" rel="noreferrer">노션 작업지시서</a></p></section>
+<section class="panel" style="margin-top:16px"><h2>중단 지점과 남은 확인</h2><pre id="realstatus">확인 기록 대기</pre><p><a href="https://app.notion.com/p/41f1cdebb6a5815cb75ccdc97b769d0b" target="_blank" rel="noreferrer">노션 작업지시서</a></p></section>
 </main><script>
 let trace={},frames=[],index=0,playing=false,realLidar={},loadedKey=null;
 const $=id=>document.getElementById(id);const number=(v,n=2)=>v!==null&&v!==undefined&&Number.isFinite(Number(v))?Number(v).toFixed(n):'—';
@@ -37,7 +37,7 @@ async function loadtrace(){const key=$('case').value;const nt=await(await fetch(
 async function refresh(){try{
 const state=await(await fetch('/api/state')).json(),rows=state.training||[],last=rows.at(-1);
 $('episodes').textContent=last?.episode??'대기';$('reward').textContent=last?number(last.return??last.reward??last.episode_return):'—';chart(rows);
-if(state.evaluation)evaluationView(state.evaluation); if(state.candidate_comparison)candidateView(state.candidate_comparison); if(state.contracts)$('contractsSummary').textContent='입력 계약 합성 오류 시나리오: '+JSON.stringify(state.contracts.summary||{cases:state.contracts.cases?.length})+' · 실제 센서 연결 검증 아님'; const selected=(state.diagnostics?.cases||[]).find(x=>String(x.seed)===$('case').value);$('diagnosis').textContent=selected?selected.diagnosis+' — 모의 재생 증거, 실제 기계 고장 판정 아님':'';
+if(state.evaluation)evaluationView(state.evaluation); if(state.candidate_comparison)candidateView(state.candidate_comparison); if(state.contracts)$('contractsSummary').textContent='입력 계약 합성 오류 시나리오: '+`${state.contracts.passed}/${state.contracts.total} 통과`+' · 실제 센서 연결 검증 아님'; const selected=(state.diagnostics?.cases||[]).find(x=>String(x.seed)===$('case').value);$('diagnosis').textContent=selected?selected.diagnosis+' — 모의 재생 증거, 실제 기계 고장 판정 아님':'';
 $('updated').textContent='갱신 '+new Date().toLocaleTimeString('ko-KR');
 $('realstatus').textContent=JSON.stringify({실물:state.real_observation||{},입력계약시험:state.contracts||'준비 중'},null,2);
 $('camtime').textContent=state.real_observation?.camera?.captured_at||'실제 1회 촬영 · 원본 보존';
