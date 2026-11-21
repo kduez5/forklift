@@ -15,14 +15,23 @@ Raspberry Pi 5 기반 지게차 프로젝트의 팀 공유 저장소입니다.
 
 모의 시험은 Windows Python 3.11에서 73개 통과·Linux 전용 1개 건너뜀, Pi5 Linux Python 3.13에서 74개 모두 통과했습니다. 실제 장치 구동 성공을 뜻하지 않습니다.
 
-처음 받는 팀원은 Git과 Python 3.11 이상을 준비한 뒤:
+처음 받는 팀원은 Git과 Python 3.11 이상을 준비한 뒤 아래 작업 브랜치를 받습니다. 원본 저장소의 PR 병합 전에도 바로 모의 시험할 수 있습니다.
+
+```bash
+git clone --branch codex/manual-station --single-branch https://github.com/leejunhee0813/forklift.git forklift-manual
+cd forklift-manual
+```
+
+Windows에서는 `python -m manual_station`, Linux에서는 `python3 -m manual_station`으로 모의 화면을 시작합니다. 터미널에 출력된 세션 주소를 브라우저에서 엽니다. 자세한 SSH 접속·조작·종료 방법은 [팀원 실행 안내](manual_station/README.md)를 따릅니다.
+
+원본 저장소에 PR이 병합된 후에는 아래 명령으로도 받을 수 있습니다.
 
 ```bash
 git clone https://github.com/kduez5/forklift.git
 cd forklift
 ```
 
-Windows에서는 `python -m manual_station`, Linux에서는 `python3 -m manual_station`으로 모의 화면을 시작합니다. 터미널에 출력된 세션 주소를 브라우저에서 엽니다. 자세한 SSH 접속·조작·종료 방법은 [팀원 실행 안내](manual_station/README.md)를 따릅니다.
+수정은 각자 계정의 작업 브랜치에서 진행하고 `kduez5/forklift`에 PR로 공유합니다. 원본 저장소의 쓰기 권한이 없는 팀원도 fork와 PR로 참여할 수 있습니다.
 
 ## 기존 휠 제어 자료
 
