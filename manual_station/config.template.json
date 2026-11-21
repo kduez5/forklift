@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "numbering": "BCM",
+  "max_duty_percent": 40,
+  "reserved_pins": [],
+  "note": "HARDWARE_PENDING. Fill only after physical verification. pin_candidates.json is reference history, not deployable wiring.",
+  "safety_checks": {
+    "wiring_verified": false,
+    "logic_power_and_common_ground_verified": false,
+    "enable_off_verified": false,
+    "area_clear": false,
+    "physical_stop_verified": false,
+    "other_controllers_stopped": false,
+    "wheels_unloaded": false,
+    "lift_holding_verified": false,
+    "lift_limits_verified": false,
+    "lift_inputs_healthy": false
+  },
+  "wheels": {
+    "front-a": {"in1": null, "in2": null, "enable": null, "side": null, "forward_sign": null, "confirmed": false},
+    "front-b": {"in1": null, "in2": null, "enable": null, "side": null, "forward_sign": null, "confirmed": false},
+    "rear-a": {"in1": null, "in2": null, "enable": null, "side": null, "forward_sign": null, "confirmed": false},
+    "rear-b": {"in1": null, "in2": null, "enable": null, "side": null, "forward_sign": null, "confirmed": false}
+  },
+  "lift": {
+    "enabled": false,
+    "driver": "dual_pwm",
+    "in1": null,
+    "in2": null,
+    "enable": null,
+    "up_sign": null,
+    "upper_limit": {"pin": null, "active_level": 0},
+    "lower_limit": {"pin": null, "active_level": 0},
+    "confirmed": false
+  }
+}
