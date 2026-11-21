@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>수동 제어 스테이션 · Jongsul</title>
+  <style>
+    :root{--ink:#152e2c;--muted:#647775;--paper:#f2f5f3;--line:#dce5e0;--green:#117663;--green-dark:#075344;--mint:#e3f3ec;--red:#bd303b;--red-soft:#fff0f0;--orange:#a45c13;--blue:#3467a3;--shadow:0 8px 30px #173b2e08}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI","Malgun Gothic",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.43}button,input,select,textarea{outline-offset:4px}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #2d8eec}button{border:1px solid var(--line);border-radius:11px;background:white;color:var(--ink);padding:10px 15px;font-weight:650;transition:background .12s,transform .12s}button:not(:disabled):hover{background:#f2f7f4}button:not(:disabled):active{transform:translateY(1px)}h1,h2,h3,p{margin:0}h1{font-size:clamp(23px,3vw,32px);letter-spacing:-1.2px;line-height:1.25}h2{font-size:18px;letter-spacing:-.5px}h3{font-size:14px}small,.small{font-size:12px;color:var(--muted)}[hidden]{display:none!important}.shell{max-width:1320px;margin:auto;padding:28px 28px 40px}.top{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:22px}.eyebrow{font-size:11px;letter-spacing:2px;font-weight:800;color:var(--green);margin-bottom:7px}.top-actions,.row,.badges{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.badge{display:inline-flex;align-items:center;gap:7px;border-radius:6px;padding:5px 9px;font-size:11px;font-weight:800;letter-spacing:.4px;background:#e8eeeb}.badge.mock{color:var(--blue);background:#e9f0fa}.badge.real{color:#85420a;background:#fff0d9}.connection-dot{width:7px;height:7px;border-radius:50%;background:#a7b6b0}.connection-dot.on{background:#1a9267;box-shadow:0 0 0 3px #1a926711}.estop{background:var(--red);border-color:var(--red);color:white;padding:12px 20px;border-radius:12px}.estop:not(:disabled):hover{background:#a11d29}.estop .symbol{font-size:16px;margin-right:7px}.banner{display:flex;align-items:center;justify-content:space-between;gap:18px;background:#e7efea;border:1px solid #d7e4dc;border-radius:12px;padding:13px 18px;margin-bottom:16px}.banner strong{font-size:13px}.banner p{font-size:12px;color:var(--muted);margin-top:2px}.banner.real-banner{background:#fff3df;border-color:#edd8b5}.steps{display:flex;gap:12px;margin:15px 0 24px;color:var(--muted);font-size:12px;flex-wrap:wrap}.step{display:flex;gap:7px;align-items:center}.step b{display:grid;place-items:center;width:21px;height:21px;background:white;border:1px solid var(--line);border-radius:50%;font-size:10px}.step.done{color:var(--green)}.step.done b{background:var(--green);border-color:var(--green);color:white}.steps .chev{color:#aab9b2}.grid{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(320px,1fr);gap:18px}.card{background:white;border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow);padding:22px}.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:18px}.sub{font-size:12px;color:var(--muted);margin-top:4px}.stack{display:grid;gap:18px;align-content:start}.state-pill{background:#edf1ee;padding:6px 11px;border-radius:8px;font-size:12px;font-weight:750;white-space:nowrap}.state-pill.armed{background:var(--mint);color:var(--green-dark)}.state-pill.moving{background:#d8efec;color:var(--green-dark)}.state-pill.fault{background:var(--red-soft);color:var(--red)}.segmented{display:flex;background:#f1f5f2;border-radius:10px;padding:4px;gap:4px}.segmented button{flex:1;border:0;background:transparent;padding:8px 12px;font-size:13px}.segmented button.selected{background:white;box-shadow:0 2px 5px #173b2e10;color:var(--green)}.control-layout{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:24px;margin:25px 0}.dpad{display:grid;grid-template-columns:repeat(3,68px);grid-template-rows:repeat(3,62px);gap:7px;justify-content:center}.motion{touch-action:none;user-select:none;-webkit-user-select:none;position:relative;background:#f5f8f5;border-color:#d4e0d8}.motion .arrow{display:block;font-size:25px;line-height:1.2}.motion kbd{font:10px system-ui;color:var(--muted)}.motion.active{background:var(--green)!important;color:white;border-color:var(--green);box-shadow:0 0 0 4px #11766318}.motion.active kbd{color:white}.dpad .up{grid-area:1/2}.dpad .left{grid-area:2/1}.dpad .stop-small{grid-area:2/2;color:var(--red);font-size:11px;background:var(--red-soft);padding:4px}.dpad .right{grid-area:2/3}.dpad .down{grid-area:3/2}.schematic{position:relative;width:154px;height:212px;margin:0 auto;background:#edf4ef;border:1px solid #d9e7de;border-radius:22px;display:flex;align-items:center;justify-content:center;flex-direction:column}.schematic::before,.schematic::after{content:"";position:absolute;top:-25px;width:18px;height:44px;background:#c3d7ca;border-radius:4px 4px 0 0}.schematic::before{left:39px}.schematic::after{right:39px}.schematic .chassis-title{font-size:11px;font-weight:800;letter-spacing:2px;color:#6e8d7b}.schematic .chassis-arrow{font-size:35px;color:#9ab5a4;line-height:1.4}.schematic small{font-size:10px}.wheel{position:absolute;width:37px;height:61px;border:1px solid #c6d6cb;background:#dbe7df;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:750;color:#617c6c}.wheel.a{left:-15px;top:22px}.wheel.b{right:-15px;top:22px}.wheel.c{left:-15px;bottom:19px}.wheel.d{right:-15px;bottom:19px}.control-note{padding:10px 12px;border-radius:8px;background:#f7f9f7;font-size:12px;color:var(--muted)}.channel-panel{padding:24px 0}.channel-keys{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}.channel-keys button{min-height:85px}.channel-keys strong{display:block;font-size:24px}.field{display:grid;gap:6px;font-size:12px;font-weight:650;margin-bottom:14px}.field input,.field select,.field textarea{width:100%;border:1px solid #cedbd3;border-radius:9px;padding:10px 11px;background:white;color:var(--ink);min-width:0}.field textarea{min-height:85px;resize:vertical}.duty{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;padding:20px 0 0;border-top:1px solid var(--line)}.duty label{font-size:12px;font-weight:700}.duty input{width:100%;accent-color:var(--green)}.duty output{font-size:24px;font-weight:750;font-variant-numeric:tabular-nums}.duty output small{font-size:12px}.range-note{display:flex;justify-content:space-between;margin-top:5px;font-size:11px;color:var(--muted)}.primary{background:var(--green);color:white;border-color:var(--green)}.primary:not(:disabled):hover{background:var(--green-dark)}.wide{width:100%}.danger-outline{border-color:#e9bfc3;color:var(--red);background:#fffafa}.owner-box{display:flex;justify-content:space-between;align-items:center;padding:12px;background:#f4f7f4;border-radius:10px;margin-bottom:14px;gap:10px}.owner-box .label{font-size:10px;color:var(--muted);letter-spacing:.5px}.owner-box strong{font-size:13px}.owner-box button{font-size:11px;padding:6px 9px}.check{display:flex;gap:9px;font-size:12px;color:#526b60;line-height:1.55;margin:15px 0;align-items:flex-start}.check input{margin-top:3px;accent-color:var(--green);width:15px;height:15px;flex:0 0 auto}.scope{display:flex;gap:15px;font-size:12px;padding:2px 0}.scope label{display:flex;align-items:center;gap:6px}.scope input{accent-color:var(--green)}.button-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.stop-main{min-height:47px;margin-top:9px;background:var(--red-soft);color:var(--red);border-color:#f0d2d4}.hint{font-size:12px;color:var(--muted);margin-top:10px}.reason{margin:13px 0 0;font-size:12px;word-break:break-word;background:#f5f7f5;border-radius:8px;padding:10px 12px}.errors{font-size:11px;color:#925520;padding-left:17px;margin:10px 0}.status-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:15px 0}.metric{border:1px solid var(--line);border-radius:9px;padding:10px}.metric span{display:block;font-size:10px;color:var(--muted)}.metric strong{font-size:17px;font-weight:700;font-variant-numeric:tabular-nums}.metric small{font-size:10px}.lift-controls{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.lift-controls .motion{padding:13px}.limits{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);gap:8px}.output-row{display:grid;grid-template-columns:80px 1fr 54px;gap:10px;align-items:center;font-size:11px;margin:10px 0}.output-bar{height:7px;background:#edf2ee;border-radius:6px;position:relative;overflow:hidden}.output-bar::after{content:"";position:absolute;left:50%;height:100%;width:1px;background:#bdcfc2}.output-bar i{position:absolute;height:100%;background:var(--green);border-radius:6px}.output-value{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}.section-title{display:flex;align-items:center;justify-content:space-between;margin:26px 0 13px}.section-title h2{font-size:15px}.sensor-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.sensor{background:#f9fbf9;border:1px solid var(--line);border-radius:12px;padding:15px}.sensor-head{display:flex;justify-content:space-between;gap:6px;margin-bottom:7px}.sensor-head strong{font-size:12px}.sensor-head span{font-size:10px;color:var(--muted);background:#eaf0eb;border-radius:4px;padding:2px 5px;white-space:nowrap}.sensor p{font-size:11px;color:var(--muted)}.workflow{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-top:14px}.stage{padding:11px 7px;border:1px dashed #cbd8ce;border-radius:9px;text-align:center;font-size:11px}.stage span{display:block;color:#8b9c91;font-size:10px;margin-top:5px}.lower-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}.events{list-style:none;padding:0;margin:0}.events li{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #edf1ee;font-size:11px;align-items:flex-start}.events li::before{content:"";flex:0 0 5px;height:5px;background:#8ba998;border-radius:50%;margin-top:6px}.events time{margin-left:auto;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}.events .empty{color:var(--muted)}.connection-panel{margin-bottom:18px;padding:17px 20px}.connection-panel summary{font-size:12px;font-weight:700;cursor:pointer}.connection-form{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;margin-top:14px}.connection-form .field{margin:0}.connection-form button{height:44px}.notice{border:1px solid #e9d5b8;color:#85511d;background:#fff7e9;padding:11px 15px;border-radius:10px;font-size:12px;margin-bottom:16px}.notice.error{color:#9b2630;border-color:#edc7cb;background:#fff1f2}.footer{display:flex;justify-content:space-between;gap:15px;font-size:11px;color:var(--muted);margin-top:25px;flex-wrap:wrap}.muted{color:var(--muted)}.note-result{font-size:12px;margin-top:10px;min-height:18px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(max-width:950px){.grid{grid-template-columns:minmax(0,1.3fr) minmax(300px,1fr)}.control-layout{gap:14px;grid-template-columns:1fr}.schematic{display:none}.sensor-grid{grid-template-columns:repeat(2,1fr)}.workflow{grid-template-columns:repeat(4,1fr)}}@media(max-width:700px){.shell{padding:20px 14px 30px}.top{align-items:flex-start}.top-actions{justify-content:flex-end;gap:7px}.top-actions .connection-label{display:none}.estop{padding:11px 12px;font-size:12px}.grid,.lower-grid{grid-template-columns:1fr}.card{padding:19px}.control-layout{grid-template-columns:1fr 1fr;gap:12px}.schematic{display:flex;width:122px;height:180px}.dpad{grid-template-columns:repeat(3,57px);grid-template-rows:repeat(3,58px);gap:5px}.wheel{width:30px;height:50px}.schematic::before{left:29px}.schematic::after{right:29px}.banner{padding:12px}.banner>.badge{display:none}.steps{gap:7px;font-size:10px}.step{gap:4px}.steps .chev{display:none}.connection-form{grid-template-columns:1fr}.sensor{padding:12px}.workflow{grid-template-columns:repeat(4,1fr)}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}@media(max-width:380px){.schematic{display:none}.control-layout{grid-template-columns:1fr}.sensor-grid{grid-template-columns:1fr 1fr}.top h1{font-size:21px}}
+  </style>
+</head>
+<body>
+<main class="shell">
+  <header class="top">
+    <div><div class="eyebrow">JONGSUL / MANUAL STATION</div><h1>수동 제어 스테이션</h1><p class="sub">작게 움직이고, 멈춘 뒤 확인합니다.</p></div>
+    <div class="top-actions"><span class="badge"><span id="connectionDot" class="connection-dot"></span><span id="connectionLabel" class="connection-label">연결 대기</span></span><button id="estopButton" class="estop" disabled><span class="symbol" aria-hidden="true">■</span>비상 정지</button></div>
+  </header>
+  <div id="modeBanner" class="banner"><div><strong id="modeTitle">서버에 연결해 현재 모드를 확인하세요</strong><p id="modeDescription">페이지를 열어도 제어권을 가져오거나 ARM하지 않습니다.</p></div><span id="modeBadge" class="badge">MODE —</span></div>
+  <div class="steps" aria-label="조작 순서"><span id="stepConnect" class="step"><b>1</b>서버 연결</span><span class="chev">›</span><span id="stepClaim" class="step"><b>2</b>제어권 획득</span><span class="chev">›</span><span id="stepArm" class="step"><b>3</b>확인 후 ARM</span><span class="chev">›</span><span class="step"><b>4</b>누르는 동안 조작</span><span class="chev">›</span><span class="step"><b>5</b>정지 · 결과 기록</span></div>
+  <div id="notice" class="notice" role="status" aria-live="polite">접속 토큰을 입력하면 서버 상태를 확인할 수 있습니다.</div>
+  <details id="connectionDetails" class="card connection-panel" open><summary>서버 연결 설정</summary><form id="connectionForm" class="connection-form"><label class="field">접속 토큰<input id="tokenInput" type="password" autocomplete="off" spellcheck="false" placeholder="실행 화면에 표시된 토큰" aria-describedby="tokenHelp"></label><button id="connectButton" class="primary" type="submit">서버 연결</button></form><p id="tokenHelp" class="hint">토큰은 이 탭의 세션에만 보관합니다. 재연결 뒤에는 제어권 획득과 ARM이 다시 필요합니다.</p></details>
+  <div class="grid">
+    <section class="card" aria-labelledby="driveTitle">
+      <div class="card-head"><div><h2 id="driveTitle">바퀴 수동 조작</h2><p class="sub">키 또는 버튼을 놓으면 정지합니다.</p></div><span id="driveScopeBadge" class="badge">WHEELS</span></div>
+      <div class="segmented" role="group" aria-label="바퀴 조작 방식"><button id="vehicleMode" class="selected" aria-pressed="true">차체 이동</button><button id="channelMode" aria-pressed="false">개별 채널</button></div>
+      <div id="vehiclePanel"><div class="control-layout"><div class="dpad"><button class="motion up" data-command="forward" disabled aria-label="전진, 누르고 유지"><span class="arrow">↑</span><kbd>W</kbd></button><button class="motion left" data-command="left" disabled aria-label="좌회전, 누르고 유지"><span class="arrow">←</span><kbd>A</kbd></button><button class="stop-small" data-stop disabled aria-label="정지">STOP<br><small>Space</small></button><button class="motion right" data-command="right" disabled aria-label="우회전, 누르고 유지"><span class="arrow">→</span><kbd>D</kbd></button><button class="motion down" data-command="reverse" disabled aria-label="후진, 누르고 유지"><span class="arrow">↓</span><kbd>S</kbd></button></div><div class="schematic" aria-hidden="true"><div class="wheel a">F</div><div class="wheel b">F</div><span class="chassis-arrow">↑</span><span class="chassis-title">FORKLIFT</span><small>방향 안내용 도식</small><div class="wheel c">R</div><div class="wheel d">R</div></div></div><p class="control-note">방향키 / WASD · 두 방향을 동시에 누르면 정지합니다. 차체 방향은 확인된 채널 위치·극성 설정을 사용합니다.</p></div>
+      <div id="channelPanel" class="channel-panel" hidden><label class="field">시험할 전기 채널<select id="channelSelect"><option value="front-a">front-a · 전방 A</option><option value="front-b">front-b · 전방 B</option><option value="rear-a">rear-a · 후방 A</option><option value="rear-b">rear-b · 후방 B</option></select></label><div class="channel-keys"><button class="motion" data-command="channel" data-direction="1" disabled><strong>＋</strong>전기 방향 +</button><button class="motion" data-command="channel" data-direction="-1" disabled><strong>−</strong>전기 방향 −</button></div><p class="control-note">채널 버튼으로만 조작합니다. +/−는 전기 명령의 부호이며 실물의 전진·후진을 뜻하지 않습니다.</p></div>
+      <div class="duty"><label for="dutyInput">출력 비율</label><input id="dutyInput" type="range" min="1" max="40" value="20" step="1"><output id="dutyValue" for="dutyInput">20<small>%</small></output></div><div class="range-note"><span>PWM 요청 비율 · 실제 속도 아님</span><span>모든 방향 상한 40%</span></div>
+      <div class="status-grid"><div class="metric"><span>입력 남은 시간</span><strong id="commandTime">—</strong> <small>초</small></div><div class="metric"><span>연속 동작 남음</span><strong id="burstTime">—</strong> <small>초</small></div><div class="metric"><span>현재 조작</span><strong id="heldLabel" style="font-size:13px">정지</strong></div></div>
+    </section>
+    <div class="stack">
+      <section class="card" aria-labelledby="controlTitle"><div class="card-head"><div><h2 id="controlTitle">제어권과 시작</h2><p class="sub">한 번에 한 조작자만 제어합니다.</p></div><span id="statePill" class="state-pill">연결 대기</span></div><div class="owner-box"><div><div class="label">현재 조작자</div><strong id="ownerLabel">확인 전</strong></div><button id="releaseButton" hidden>제어권 반납</button></div><div id="claimForm"><label class="field">조작자 이름<input id="operatorLabel" maxlength="64" placeholder="예: 이준희" autocomplete="name"></label><button id="claimButton" class="wide" disabled>제어권 획득</button></div><div class="scope" role="group" aria-label="ARM 대상"><label><input type="radio" name="scope" value="wheels" checked>바퀴</label><label><input type="radio" name="scope" value="lift">리프트</label></div><label class="check"><input id="readinessCheck" type="checkbox"><span>현재 모드와 시험 대상을 확인했습니다.<br>실물 시험이라면 주변·전원·정지 수단을 확인했습니다.</span></label><div class="button-grid"><button id="armButton" class="primary" disabled>ARM · 조작 준비</button><button id="resetButton" disabled>정지 래치 RESET</button></div><button class="stop-main wide" data-stop disabled>■ 정지 <small>Space</small></button><p class="hint">ARM 자체는 움직이지 않습니다. 정지 후에는 새 ARM과 새 조작 입력이 필요합니다.</p><div id="stateReason" class="reason">서버 상태를 기다리고 있습니다.</div><ul id="validationErrors" class="errors" hidden></ul></section>
+      <section class="card" aria-labelledby="liftTitle"><div class="card-head"><div><h2 id="liftTitle">리프트</h2><p class="sub">바퀴와 동시에 조작할 수 없습니다.</p></div><span id="liftBadge" class="badge">확인 전</span></div><div class="lift-controls"><button class="motion" data-command="lift_up" disabled>↑ 상승 <kbd>I</kbd></button><button class="motion" data-command="lift_down" disabled>↓ 하강 <kbd>K</kbd></button></div><div class="limits"><span>상한 입력 <b id="upperLimit">미확인</b></span><span>하한 입력 <b id="lowerLimit">미확인</b></span></div><p class="hint">실물은 방향·리미트·하중 유지 조건이 확인되어야 활성화됩니다.</p></section>
+    </div>
+  </div>
+  <div class="section-title"><h2>연결 상태</h2><span class="small">미확인 값을 정상으로 표시하지 않습니다.</span></div>
+  <div class="sensor-grid"><article class="sensor"><div class="sensor-head"><strong>LiDAR · 지도</strong><span>미연결</span></div><p>지도·위치·장애물 회피는 아직 연결되지 않았습니다.</p></article><article class="sensor"><div class="sensor-head"><strong>카메라 · 인식</strong><span>미연결</span></div><p>실시간 영상이나 물품 인식 결과가 없습니다.</p></article><article class="sensor"><div class="sensor-head"><strong>NFC · 물류 ID</strong><span>미연결</span></div><p>아래 기록의 ID는 사용자가 직접 입력합니다.</p></article><article class="sensor"><div class="sensor-head"><strong>거리 · 접촉 센서</strong><span>미확인</span></div><p>실측 거리·장착 방향·접촉 상태를 수신하지 않습니다.</p></article></div>
+  <div class="lower-grid"><section class="card" aria-labelledby="outputTitle"><div class="card-head"><div><h2 id="outputTitle">명령 출력</h2><p id="outputCaption" class="sub">하드웨어 피드백이나 실제 이동량이 아닙니다.</p></div><span class="badge">± DUTY</span></div><div id="outputs"></div><div class="section-title"><h2>최근 기록</h2><span class="small">서버 기록</span></div><ul id="eventList" class="events"><li class="empty">연결 후 기록을 표시합니다.</li></ul></section><section class="card" aria-labelledby="noteTitle"><div class="card-head"><div><h2 id="noteTitle">멈춘 뒤 관찰 기록</h2><p class="sub">명령 수신과 실물 작업 완료를 구분합니다.</p></div></div><form id="noteForm"><label class="field">물류 ID <span class="muted">선택</span><input id="logisticsId" maxlength="128" placeholder="예: TEST-001"></label><label class="field">관찰 내용<textarea id="noteText" maxlength="2000" placeholder="시험한 채널, 관찰한 방향, 정지 후 상태를 기록하세요. 모의 시험은 ‘모의’라고 적어 주세요." required></textarea></label><button id="noteButton" class="wide" disabled>관찰 기록 저장</button><p id="noteResult" class="note-result" role="status"></p></form></section></div>
+  <section class="card" style="margin-top:18px" aria-labelledby="workflowTitle"><h2 id="workflowTitle" style="font-size:15px">물류 전체 흐름 · 후속 연결</h2><p class="sub">현재는 수동 시험 단계입니다. 아래 작업은 조작 버튼으로 자동 완료되지 않습니다.</p><div class="workflow"><div class="stage">입고<span>대기</span></div><div class="stage">ID 식별<span>대기</span></div><div class="stage">목적지 결정<span>대기</span></div><div class="stage">위치 · 이동<span>대기</span></div><div class="stage">정렬 · 집기<span>대기</span></div><div class="stage">운반 · 적치<span>대기</span></div><div class="stage">재고 기록<span>대기</span></div><div class="stage">출고 확인<span>대기</span></div></div></section>
+  <footer class="footer"><span>SOFTWARE READY / HARDWARE PENDING</span><span>모의 검증과 실물 구동 성공은 별개입니다. 현장 물리 비상정지 수단을 유지하세요.</span></footer>
+</main>
+<script>
+'use strict';
+(() => {
+  const $ = id => document.getElementById(id);
+  const labels = {forward:'전진',reverse:'후진',left:'좌회전',right:'우회전',channel:'개별 채널',lift_up:'리프트 상승',lift_down:'리프트 하강'};
+  const states = {DISARMED:'DISARMED · 정지',ARMED:'ARMED · 준비',MOVING:'MOVING · 명령 중',ESTOP:'ESTOP · 정지 래치',FAULT:'FAULT · 확인 필요',CLOSED:'CLOSED · 종료'};
+  const motionButtons = [...document.querySelectorAll('[data-command]')];
+  const stopButtons = [...document.querySelectorAll('[data-stop]')];
+  let token = '', lease = null, snapshot = null, connected = false, connecting = false;
+  let mode = 'vehicle', selectedScope = 'wheels', sequence = 0, epoch = 0, inputGeneration = 0;
+  let held = null, pointerId = null, keys = new Set(), keyLatch = false;
+  let pollTimer = null, commandTimer = null, pollBusy = false, commandBusy = false, actionBusy = false, activeActions = 0;
+  let requestSerial = 0, appliedSerial = 0, appliedTime = -Infinity, commandAbort = null, stopping = false, localArmed = false;
+  const isArmed = () => snapshot && ['ARMED','MOVING'].includes(snapshot.state);
+  const owns = () => Boolean(lease && snapshot && snapshot.owns_control);
+  const scopeReady = scope => Boolean(snapshot && snapshot.scopes_available && snapshot.scopes_available[scope]);
+  const hasLifecyclePermit = () => typeof snapshot?.lifecycle_permit==='string' && snapshot.lifecycle_permit.length>0 && snapshot.lifecycle_permit_expires_in_s>0;
+  const canMove = command => connected && localArmed && owns() && isArmed() && snapshot.scope === (command.startsWith('lift_') ? 'lift' : 'wheels');
+  const seconds = value => typeof value === 'number' && Number.isFinite(value) ? Math.max(0,value).toFixed(2) : '—';
+  const safeText = value => typeof value === 'string' ? value : value == null ? '' : String(value);
+  function notice(message, error = false) { $('notice').textContent = message; $('notice').classList.toggle('error',error); }
+  function rememberToken() { try { sessionStorage.setItem('manual-station-token',token); } catch (_) {} }
+  function takeLifecyclePermit() {
+    if(!hasLifecyclePermit()){notice('최신 준비 권한을 기다리고 있습니다. 상태를 다시 확인한 뒤 버튼을 직접 눌러 주세요.',true);return null;}
+    const permit=snapshot.lifecycle_permit;
+    snapshot.lifecycle_permit=null;
+    snapshot.lifecycle_permit_expires_in_s=0;
+    return permit;
+  }
+  class ApiError extends Error { constructor(message,status,data) { super(message); this.status=status; this.data=data; } }
+  async function api(action, body, options = {}) {
+    const controller = new AbortController();
+    // Status polling tolerates a slow render/network round trip. Motion and
+    // lifecycle actions retain their short timeout and server-side deadlines.
+    const timeoutMs = action==='state' && body===undefined ? 1000 : 250;
+    const timer = setTimeout(() => controller.abort(),timeoutMs);
+    if (options.command) commandAbort = controller;
+    const headers = {Authorization:`Bearer ${token}`};
+    const init = {method:body === undefined ? 'GET' : 'POST',headers,signal:controller.signal,cache:'no-store'};
+    if (body !== undefined) { headers['Content-Type']='application/json'; init.body=JSON.stringify(body); }
+    if (body === undefined && lease && !options.noLease) headers['X-Control-Lease']=lease;
+    try {
+      const response = await fetch(`/api/${action}`,init);
+      const data = await response.json();
+      if (!response.ok) throw new ApiError(safeText(data.error || data.reason || data.message) || `요청 거부 (${response.status})`,response.status,data);
+      return data;
+    } finally { clearTimeout(timer); if (options.command && commandAbort === controller) commandAbort=null; }
+  }
+  function clearHeld() {
+    inputGeneration++;
+    held=null; pointerId=null;
+    if (commandAbort) commandAbort.abort();
+    motionButtons.forEach(button => button.classList.remove('active'));
+    $('heldLabel').textContent='정지';
+  }
+  async function sendStop() {
+    if (!token || stopping) return;
+    stopping=true;
+    const currentEpoch=epoch, requestLease=lease, serial=++requestSerial;
+    try { const data=await api('stop',requestLease?{lease:requestLease}:{}); if (connected && currentEpoch===epoch && requestLease===lease) applySnapshot(data,serial); }
+    catch (_) { /* No retry. The server independently expires motion and ownership. */ }
+    finally { stopping=false; }
+  }
+  function safetyStop(reason, force=false) {
+    const hadMotion=Boolean(held || isArmed());
+    clearHeld(); localArmed=false; keyLatch=keys.size>0; $('readinessCheck').checked=false;
+    if(snapshot){snapshot.permit=null;snapshot.lifecycle_permit=null;snapshot.lifecycle_permit_expires_in_s=0;}
+    if (reason) notice(reason);
+    if (force || hadMotion) void sendStop();
+    render();
+  }
+  function disconnect(reason) {
+    const wasConnected=connected || connecting;
+    clearHeld(); localArmed=false; keys.clear(); keyLatch=false;
+    connected=false; connecting=false; epoch++; lease=null; pollBusy=false;
+    clearInterval(pollTimer); clearInterval(commandTimer); pollTimer=commandTimer=null;
+    $('readinessCheck').checked=false;
+    $('connectionDetails').open=true;
+    notice(reason || '서버 연결이 끊겼습니다. 움직임을 다시 시작하지 않습니다. 연결 상태를 확인하고 직접 재연결하세요.',true);
+    if (wasConnected) void sendStop();
+    render();
+  }
+  function applySnapshot(data,serial) {
+    if (!data || typeof data.state!=='string') return;
+    const hasTime=typeof data.monotonic_s==='number'&&Number.isFinite(data.monotonic_s);
+    if (hasTime ? data.monotonic_s<appliedTime : serial<appliedSerial) return;
+    appliedSerial=Math.max(appliedSerial,serial);
+    if(hasTime) appliedTime=data.monotonic_s;
+    const previous=snapshot;
+    snapshot=data;
+    if (lease && !data.owns_control) {
+      safetyStop('제어권이 만료되거나 다른 상태로 전환되었습니다. 다시 제어권을 획득하세요.',true);
+      lease=null;
+    }
+    if (previous && ['ARMED','MOVING'].includes(previous.state) && !['ARMED','MOVING'].includes(data.state)) {
+      clearHeld(); localArmed=false; keyLatch=keys.size>0; $('readinessCheck').checked=false;
+      notice(`출력 정지: ${safeText(data.reason) || states[data.state] || data.state}. 새 ARM과 새 입력이 필요합니다.`);
+    }
+    if (held && (!canMove(held.command) || !scopeReady(snapshot.scope))) safetyStop('현재 상태에서는 조작할 수 없어 정지했습니다.',true);
+    render();
+  }
+  async function poll() {
+    if (!connected || pollBusy || actionBusy) return;
+    pollBusy=true;
+    const currentEpoch=epoch,requestLease=lease,serial=++requestSerial;
+    let phase='fetch';
+    try { const data=await api('state'); phase='render'; if (currentEpoch===epoch && connected && requestLease===lease && !actionBusy) applySnapshot(data,serial); }
+    catch (error) {
+      console.warn(`[manual-station] state ${phase} failed`,{name:safeText(error?.name),message:safeText(error?.message).slice(0,500),status:typeof error?.status==='number'?error.status:undefined});
+      if (currentEpoch===epoch) {
+        if(phase==='render') snapshot=null;
+        disconnect(phase==='render' ? `화면 상태 처리 오류 (${safeText(error?.name)||'Error'}). 조작을 중단했습니다. 다시 연결하세요.` : error instanceof ApiError && error.status===401 ? '접속 토큰이 유효하지 않습니다. 토큰을 확인해 다시 연결하세요.' : `상태 요청 실패 (${safeText(error?.name)||'Error'}). 조작을 중단했습니다. 직접 재연결하기 전에는 재시도하지 않습니다.`);
+      }
+    }
+    finally { if (currentEpoch===epoch) pollBusy=false; }
+  }
+  async function connect() {
+    if (connecting) return;
+    const entered=$('tokenInput').value.trim();
+    if (!entered) { notice('실행 화면의 접속 토큰을 입력하세요. 아직 제어권을 요청하지 않았습니다.',true); $('tokenInput').focus(); return; }
+    if (connected) { safetyStop('다시 연결합니다. 제어권과 ARM을 새로 확인하세요.',true); }
+    clearInterval(pollTimer); clearInterval(commandTimer); clearHeld();
+    token=entered; rememberToken(); lease=null; snapshot=null; localArmed=false; sequence=0; appliedSerial=0; appliedTime=-Infinity;
+    const currentEpoch=++epoch,serial=++requestSerial;
+    connected=false; connecting=true; pollBusy=false; $('readinessCheck').checked=false; render();
+    try {
+      const data=await api('state',undefined,{noLease:true});
+      if (currentEpoch!==epoch) return;
+      connecting=false; connected=true;
+      applySnapshot(data,serial); $('connectionDetails').open=false;
+      notice('연결되었습니다. 조작하려면 이름을 입력하고 제어권을 획득하세요.');
+      pollTimer=setInterval(poll,100); commandTimer=setInterval(sendCommand,80);
+      render();
+    } catch(error) { if(currentEpoch===epoch) disconnect(error instanceof ApiError ? `연결할 수 없습니다: ${error.message}` : '서버에 연결할 수 없습니다. 서버 실행 여부와 포트·토큰을 확인하고 다시 연결하세요.'); }
+  }
+  async function action(name,body,onSuccess,urgent=false) {
+    if (!connected || (actionBusy&&!urgent)) return;
+    activeActions++; actionBusy=true; render();
+    const currentEpoch=epoch,generation=inputGeneration,serial=++requestSerial;
+    try {
+      const data=await api(name,body);
+      if (currentEpoch!==epoch || !connected) return;
+      if(name==='arm'&&generation!==inputGeneration){localArmed=false;void sendStop();return;}
+      if (onSuccess && generation===inputGeneration) onSuccess(data);
+      applySnapshot(data,serial);
+    } catch(error) {
+      if(currentEpoch!==epoch) return;
+      if(error instanceof ApiError && ![401,403,500,502,503,504].includes(error.status)) {
+        safetyStop(`요청이 거부되었습니다: ${error.message}`,name==='arm');
+      } else disconnect(error instanceof ApiError ? `서버 요청 실패: ${error.message}` : '요청 응답이 끊겼습니다. 조작을 중단했습니다. 다시 연결하세요.');
+    } finally { activeActions--; actionBusy=activeActions>0; render(); }
+  }
+  function startHold(command,button,source,direction) {
+    if (held || keyLatch || commandBusy || stopping || !canMove(command)) return;
+    if (command==='channel' && mode!=='channel') return;
+    held={command,button,source,direction,channel:$('channelSelect').value,generation:inputGeneration};
+    if(button) button.classList.add('active');
+    $('heldLabel').textContent=command==='channel' ? `${held.channel} ${direction>0?'+':'−'}` : labels[command];
+    notice('누르고 있는 동안만 명령을 보냅니다. 손을 놓으면 정지하고 다시 ARM해야 합니다.');
+    void sendCommand();
+  }
+  async function sendCommand() {
+    if (!held || commandBusy || stopping || !connected) return;
+    if (!canMove(held.command)) { safetyStop('조작 가능 상태가 아니어서 정지했습니다.',true); return; }
+    if (!snapshot.permit || !(snapshot.permit_expires_in_s>0)) return;
+    const current=held,currentEpoch=epoch,generation=inputGeneration,serial=++requestSerial;
+    const body={lease,permit:snapshot.permit,seq:++sequence,command:current.command,duty:Number($('dutyInput').value)};
+    if(current.command==='channel') { body.channel=current.channel; body.direction=current.direction; }
+    snapshot.permit=null; commandBusy=true;
+    try {
+      const data=await api('command',body,{command:true});
+      if(currentEpoch===epoch && generation===inputGeneration && held===current && connected) applySnapshot(data,serial);
+    } catch(error) {
+      if(currentEpoch!==epoch || generation!==inputGeneration) return;
+      if(error instanceof ApiError) safetyStop(`조작이 거부되어 정지했습니다: ${error.message}`,true);
+      else disconnect('조작 응답이 끊겼습니다. 즉시 입력을 중단했으며 자동으로 재시작하지 않습니다.');
+    } finally { commandBusy=false; }
+  }
+  function render() {
+    $('connectionLabel').textContent=connecting?'연결 중':connected?'서버 연결됨':'연결 대기';
+    $('connectionDot').classList.toggle('on',connected);
+    $('connectButton').disabled=connecting; $('connectButton').textContent=connecting?'확인 중…':connected?'다시 연결':'서버 연결';
+    const real=snapshot && String(snapshot.mode).toLowerCase()==='real';
+    $('modeBadge').textContent=snapshot ? (real?'REAL · 실물':'MOCK · 모의') : 'MODE —';
+    $('modeBadge').className=`badge ${snapshot?(real?'real':'mock'):''}`;
+    $('modeBanner').classList.toggle('real-banner',Boolean(real));
+    $('modeTitle').textContent=snapshot ? (real?'실물 모드 · 현장 확인 후 사용자가 직접 조작합니다':'모의 모드 · 실제 하드웨어를 구동하지 않습니다') : '서버에 연결해 현재 모드를 확인하세요';
+    $('modeDescription').textContent=snapshot ? (real?'출력 수치는 요청값입니다. 물리 비상정지와 하중 지지 수단을 유지하세요.':'바퀴·리프트 출력은 소프트웨어 모의값입니다. 실물 작동 성공을 뜻하지 않습니다.') : '페이지를 열어도 제어권을 가져오거나 ARM하지 않습니다.';
+    $('stepConnect').classList.toggle('done',connected); $('stepClaim').classList.toggle('done',connected&&owns()); $('stepArm').classList.toggle('done',connected&&localArmed&&owns()&&Boolean(isArmed()));
+    $('statePill').textContent=!connected?'연결 대기':states[snapshot?.state]||snapshot?.state||'확인 중';
+    $('statePill').className=`state-pill ${snapshot?.state==='ARMED'?'armed':snapshot?.state==='MOVING'?'moving':['FAULT','ESTOP'].includes(snapshot?.state)?'fault':''}`;
+    $('ownerLabel').textContent=snapshot?.owner ? `${safeText(snapshot.owner.label)}${owns()?' · 나의 제어권':''}` : connected?'현재 조작자 없음':'확인 전';
+    $('claimForm').hidden=owns(); $('releaseButton').hidden=!owns(); $('releaseButton').disabled=actionBusy;
+    $('claimButton').disabled=!connected||actionBusy||Boolean(snapshot?.owner);
+    $('armButton').disabled=!connected||!owns()||actionBusy||stopping||!hasLifecyclePermit()||!$('readinessCheck').checked||!scopeReady(selectedScope)||!snapshot?.can_arm;
+    $('armButton').textContent=snapshot?.arm_wait_s>0?`ARM 대기 ${seconds(snapshot.arm_wait_s)}초`:'ARM · 조작 준비';
+    $('resetButton').disabled=!connected||!owns()||actionBusy||stopping||!hasLifecyclePermit()||!['ESTOP','FAULT'].includes(snapshot?.state);
+    $('estopButton').disabled=!connected; stopButtons.forEach(b=>b.disabled=!connected);
+    $('noteButton').disabled=!connected||!owns()||actionBusy;
+    motionButtons.forEach(button=>{button.disabled=!canMove(button.dataset.command)||!scopeReady(button.dataset.command.startsWith('lift_')?'lift':'wheels');});
+    $('liftBadge').textContent=!snapshot?'확인 전':scopeReady('lift')?(real?'설정 준비됨':'모의 조작 가능'):'실물 준비 미완료';
+    const limitText=value=>value===true?'활성':value===false?'비활성':'미확인';
+    $('upperLimit').textContent=limitText(snapshot?.limits?.upper); $('lowerLimit').textContent=limitText(snapshot?.limits?.lower);
+    $('stateReason').textContent=!connected?'연결이 끊긴 동안 조작하지 않습니다. 직접 재연결하세요.':safeText(snapshot?.reason)||'출력은 정지 상태에서 시작합니다.';
+    const errors=snapshot?.validation_errors?.[selectedScope]||[];
+    $('validationErrors').replaceChildren();
+    for(const error of errors){const item=document.createElement('li');item.textContent=safeText(error);$('validationErrors').append(item);}
+    $('validationErrors').hidden=errors.length===0;
+    $('commandTime').textContent=connected?seconds(snapshot?.command_expires_in_s):'—'; $('burstTime').textContent=connected?seconds(snapshot?.burst_remaining_s):'—';
+    $('outputCaption').textContent=real?'서버의 출력 요청값 · 실제 속도/이동량 피드백 아님':'모의 출력 요청값 · 실물 구동 결과 아님';
+    renderOutputs(); renderEvents();
+  }
+  function renderOutputs(){
+    const channels=['front-a','front-b','rear-a','rear-b','lift'];
+    $('outputs').replaceChildren();
+    for(const channel of channels){
+      const row=document.createElement('div');row.className='output-row';
+      const label=document.createElement('span');label.textContent=channel;
+      const bar=document.createElement('div');bar.className='output-bar';bar.setAttribute('aria-hidden','true');
+      const fill=document.createElement('i');const raw=snapshot?.outputs?.[channel];
+      const known=connected&&typeof raw==='number'&&Number.isFinite(raw);const value=known?Math.max(-40,Math.min(40,raw)):0;
+      fill.style.left=`${value<0?50+value/40*50:50}%`;fill.style.width=`${Math.abs(value)/40*50}%`;bar.append(fill);
+      const text=document.createElement('span');text.className='output-value';text.textContent=known?`${raw>0?'+':''}${Number(raw.toFixed(1))}%`:'—';row.append(label,bar,text);$('outputs').append(row);
+    }
+  }
+  function renderEvents(){
+    const events=Array.isArray(snapshot?.recent_events)?snapshot.recent_events.slice(-5).reverse():[];
+    $('eventList').replaceChildren();
+    if(!events.length){const item=document.createElement('li');item.className='empty';item.textContent=connected?'아직 표시할 서버 기록이 없습니다.':'연결 후 기록을 표시합니다.';$('eventList').append(item);return;}
+    for(const event of events){const item=document.createElement('li'),text=document.createElement('span');text.textContent=safeText(event.event||event.action||event.kind||'상태 기록')+(event.reason?` · ${safeText(event.reason)}`:'');item.append(text);const timestamp=event.timestamp||event.created_at||event.time;if(typeof timestamp==='string'){const time=document.createElement('time');time.textContent=timestamp.length>20?timestamp.slice(11,19):timestamp;item.append(time);}$('eventList').append(item);}
+  }
+  $('connectionForm').addEventListener('submit',event=>{event.preventDefault();void connect();});
+  $('claimButton').addEventListener('click',()=>{const label=$('operatorLabel').value.trim();if(!label){notice('제어권에 표시할 조작자 이름을 입력하세요.',true);$('operatorLabel').focus();return;}void action('claim',{label},data=>{if(typeof data.lease!=='string')throw new Error('제어권 응답이 올바르지 않습니다.');lease=data.lease;sequence=0;$('readinessCheck').checked=false;notice('제어권을 획득했습니다. 시험 대상을 선택하고 준비 확인 후 ARM하세요.');});});
+  $('releaseButton').addEventListener('click',()=>{clearHeld();localArmed=false;const oldLease=lease;void action('release',{lease:oldLease},()=>{lease=null;$('readinessCheck').checked=false;notice('제어권을 반납했습니다.');});});
+  $('armButton').addEventListener('click',()=>{if(!$('readinessCheck').checked||actionBusy)return;const lifecycle_permit=takeLifecyclePermit();if(!lifecycle_permit){render();return;}clearHeld();void action('arm',{lease,scope:selectedScope,ack:true,lifecycle_permit},()=>{localArmed=true;notice('ARM 완료. 새 키 또는 버튼 입력이 있어야 움직입니다.');});});
+  $('resetButton').addEventListener('click',()=>{if(actionBusy)return;const lifecycle_permit=takeLifecyclePermit();if(!lifecycle_permit){render();return;}clearHeld();localArmed=false;void action('reset',{lease,lifecycle_permit},()=>{$('readinessCheck').checked=false;notice('RESET을 요청했습니다. DISARMED 확인 후 별도로 ARM하세요.');});});
+  $('estopButton').addEventListener('click',()=>{clearHeld();localArmed=false;$('readinessCheck').checked=false;void action('estop',lease?{lease}:{},()=>notice('비상 정지를 요청했습니다. 원인 확인 후 RESET과 새 ARM이 필요합니다.'),true);});
+  stopButtons.forEach(button=>button.addEventListener('click',()=>safetyStop('정지를 요청했습니다. 새 ARM과 새 입력이 필요합니다.',true)));
+  $('readinessCheck').addEventListener('change',render);
+  document.querySelectorAll('input[name="scope"]').forEach(input=>input.addEventListener('change',()=>{safetyStop('시험 대상을 변경했습니다. 새 ARM이 필요합니다.');selectedScope=input.value;render();}));
+  function changeMode(next){if(mode===next)return;safetyStop('조작 방식을 변경했습니다. 새 ARM이 필요합니다.');mode=next;$('vehiclePanel').hidden=next!=='vehicle';$('channelPanel').hidden=next!=='channel';for(const [id,value] of [['vehicleMode','vehicle'],['channelMode','channel']]){$(id).classList.toggle('selected',next===value);$(id).setAttribute('aria-pressed',String(next===value));}}
+  $('vehicleMode').addEventListener('click',()=>changeMode('vehicle'));$('channelMode').addEventListener('click',()=>changeMode('channel'));
+  $('channelSelect').addEventListener('change',()=>safetyStop('시험 채널을 변경했습니다. 새 ARM이 필요합니다.'));
+  $('dutyInput').addEventListener('input',()=>{if(held||isArmed())safetyStop('출력 비율을 변경했습니다. 새 ARM이 필요합니다.');$('dutyValue').replaceChildren(document.createTextNode($('dutyInput').value));const small=document.createElement('small');small.textContent='%';$('dutyValue').append(small);});
+  for(const button of motionButtons){
+    button.addEventListener('pointerdown',event=>{if(event.button!==0||button.disabled)return;event.preventDefault();if(held||pointerId!==null||keys.size){safetyStop('동시에 두 조작 입력이 들어와 정지했습니다.',true);return;}pointerId=event.pointerId;try{button.setPointerCapture(event.pointerId);}catch(_){}startHold(button.dataset.command,button,'pointer',Number(button.dataset.direction)||undefined);});
+    button.addEventListener('contextmenu',event=>event.preventDefault());
+    button.addEventListener('lostpointercapture',()=>{if(held?.button===button)safetyStop('포인터 제어가 해제되어 정지했습니다.',true);});
+  }
+  document.addEventListener('pointerup',event=>{if(pointerId===event.pointerId)safetyStop('버튼을 놓아 정지했습니다. 다시 조작하려면 ARM하세요.',true);});
+  document.addEventListener('pointercancel',event=>{if(pointerId===event.pointerId)safetyStop('포인터 입력이 취소되어 정지했습니다.',true);});
+  document.addEventListener('pointermove',event=>{if(held?.source==='pointer'&&pointerId===event.pointerId&&held.button){const r=held.button.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)safetyStop('버튼 영역을 벗어나 정지했습니다.',true);}});
+  const keyCommands={ArrowUp:'forward',ArrowDown:'reverse',ArrowLeft:'left',ArrowRight:'right',w:'forward',s:'reverse',a:'left',d:'right',i:'lift_up',k:'lift_down'};
+  const isTextTarget=target=>Boolean(target && (target.closest('input,textarea,select')||target.isContentEditable));
+  document.addEventListener('keydown',event=>{
+    if(isTextTarget(event.target)||event.ctrlKey||event.metaKey||event.altKey)return;
+    const key=event.key.length===1?event.key.toLowerCase():event.key;
+    if(key===' '){event.preventDefault();if(!event.repeat)safetyStop('Space 정지. 새 ARM과 새 입력이 필요합니다.',true);return;}
+    const command=keyCommands[key];if(!command)return;event.preventDefault();if(event.repeat||keys.has(key))return;
+    keys.add(key);if(keys.size>1||held?.source==='pointer'){keyLatch=true;safetyStop('동시에 두 조작 입력이 들어와 정지했습니다.',true);return;}
+    if(keyLatch||(mode==='channel'&&!command.startsWith('lift_')))return;
+    startHold(command,motionButtons.find(button=>button.dataset.command===command),'keyboard');
+  });
+  document.addEventListener('keyup',event=>{const key=event.key.length===1?event.key.toLowerCase():event.key;const wasDown=keys.delete(key);if(wasDown&&held?.source==='keyboard')safetyStop('키를 놓아 정지했습니다. 다시 조작하려면 ARM하세요.',true);if(!keys.size)keyLatch=false;});
+  window.addEventListener('blur',()=>{keys.clear();keyLatch=false;safetyStop('창이 비활성화되어 정지했습니다.',Boolean(connected));});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){keys.clear();keyLatch=false;safetyStop('화면이 숨겨져 정지했습니다.',Boolean(connected));}});
+  document.addEventListener('focusin',event=>{if(held&&isTextTarget(event.target))safetyStop('입력란으로 포커스가 이동해 정지했습니다.',true);});
+  window.addEventListener('pagehide',()=>{clearHeld();localArmed=false;if(token){fetch('/api/stop',{method:'POST',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},body:JSON.stringify(lease?{lease}:{}),keepalive:true}).catch(()=>{});}});
+  window.addEventListener('offline',()=>disconnect('네트워크가 오프라인입니다. 조작을 중단했습니다. 연결 복구 후 직접 재연결하세요.'));
+  $('noteForm').addEventListener('submit',event=>{event.preventDefault();const text=$('noteText').value.trim();if(!text)return;void action('note',{lease,text,logistics_id:$('logisticsId').value.trim()||null},()=>{$('noteResult').textContent='관찰 기록을 저장했습니다. 실제 작업 완료로 자동 처리하지 않습니다.';$('noteText').value='';});});
+  try{const fragment=new URLSearchParams(location.hash.slice(1));token=fragment.get('token')||sessionStorage.getItem('manual-station-token')||'';if(fragment.has('token')){history.replaceState(null,'',location.pathname+location.search);rememberToken();}}catch(_){token='';}
+  $('tokenInput').value=token; render();
+  if(token)void connect();
+})();
+</script>
+</body>
+</html>
